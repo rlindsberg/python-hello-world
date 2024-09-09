@@ -1,0 +1,19 @@
+FROM docker.io/cimg/aws:2024.03.1
+#LOCAL_VERSION 0.0.5
+
+# Switch to root user
+USER root
+
+# Copy Needed Files from Kaniko Image
+ARG user=root
+COPY --from=gcr.io/kaniko-project/executor --chown=$user /kaniko/executor /kaniko/executor
+COPY --from=gcr.io/kaniko-project/executor --chown=$user /kaniko/docker-credential-ecr-login /kaniko/docker-credential-ecr-login
+COPY --from=gcr.io/kaniko-project/executor --chown=$user /kaniko/.docker /kaniko/.docker
+COPY --from=gcr.io/kaniko-project/executor --chown=$user /kaniko/ssl/certs /kaniko/ssl/certs/
+COPY --from=gcr.io/kaniko-project/executor --chown=$user /etc/nsswitch.conf /etc/nsswitch.conf
+
+# Setting Enviroment Variables for Kaniko
+# Obs! HOME and USER should not be set
+ENV PATH="${PATH}:/kaniko"
+ENV SSL_CERT_DIR=/kaniko/ssl/certs
+ENV DOCKER_CONFIG=/kaniko/.docker/
