@@ -6,11 +6,11 @@ USER root
 
 # Copy Needed Files from Kaniko Image
 ARG user=root
-COPY --from=gcr.io/kaniko-project/executor --chown=$user /kaniko/executor /kaniko/executor
-COPY --from=gcr.io/kaniko-project/executor --chown=$user /kaniko/docker-credential-ecr-login /kaniko/docker-credential-ecr-login
-COPY --from=gcr.io/kaniko-project/executor --chown=$user /kaniko/.docker /kaniko/.docker
-COPY --from=gcr.io/kaniko-project/executor --chown=$user /kaniko/ssl/certs /kaniko/ssl/certs/
-COPY --from=gcr.io/kaniko-project/executor --chown=$user /etc/nsswitch.conf /etc/nsswitch.conf
+COPY --from=gcr.io/kaniko-project/executor:v1.23.2 --chown=$user /kaniko/executor /kaniko/executor
+COPY --from=gcr.io/kaniko-project/executor:v1.23.2 --chown=$user /kaniko/docker-credential-ecr-login /kaniko/docker-credential-ecr-login
+COPY --from=gcr.io/kaniko-project/executor:v1.23.2 --chown=$user /kaniko/.docker /kaniko/.docker
+COPY --from=gcr.io/kaniko-project/executor:v1.23.2 --chown=$user /kaniko/ssl/certs /kaniko/ssl/certs/
+COPY --from=gcr.io/kaniko-project/executor:v1.23.2 --chown=$user /etc/nsswitch.conf /etc/nsswitch.conf
 
 # Setting Enviroment Variables for Kaniko
 # Obs! HOME and USER should not be set
